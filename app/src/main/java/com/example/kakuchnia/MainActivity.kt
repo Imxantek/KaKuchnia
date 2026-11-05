@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kakuchnia.ui.theme.KaKuchniaTheme
 import com.example.kakuchnia.screens.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import java.time.LocalDate
 
 
 sealed class Screen(val route: String, val title: String, val iconResId: Int) {
@@ -32,6 +33,34 @@ sealed class Screen(val route: String, val title: String, val iconResId: Int) {
     object Home : Screen("home", "Home", R.drawable.ic_home)
 
 }
+
+data class Recipe(
+    val id: Int,
+    val title: String,
+    val description: String,
+    val preparation_time: Int,
+    val is_favourite: Boolean,
+    val user_added: Boolean,
+)
+data class Image(
+    val path: Int,
+    val recipe: Int
+)
+data class planned_recipe(
+    val date: LocalDate,
+    val recipe: Int
+)
+data class recipe_ingredient(
+    val recipe: Int,
+    val ingredient: String,
+    val amount: Double,
+    val unit: String
+)
+data class Ingedient(
+    val name: String,
+)
+
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
