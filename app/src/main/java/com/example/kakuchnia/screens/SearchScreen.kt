@@ -11,9 +11,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextField
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Button
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
@@ -41,15 +43,66 @@ fun SearchScreen(modifier: Modifier = Modifier) {
                 onValueChange = { query = it },
                 modifier = Modifier.weight(1f)
             )
-            IconButton(onClick = { }) {
-                Icon(painter = painterResource(id = R.drawable.ic_filters), contentDescription = "Filtry")
+            IconButton(
+                onClick = { }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_filters),
+                    contentDescription = "Filtry"
+                )
             }
-            IconButton(onClick = { }) {
-                Icon(painter = painterResource(id = R.drawable.ic_sort), contentDescription = "Sortuj")
+            IconButton(
+                onClick = { }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_sort),
+                    contentDescription = "Sortuj"
+                )
             }
         }
 
-        LazyColumn {
+        Row {
+            Button(
+                onClick = { },
+                modifier = modifier
+                    .weight(1f)
+            ) {
+                Text(
+                    text = "Wszystkie"
+                )
+            }
+
+            Button(
+                onClick = { },
+                modifier = modifier
+                    .weight(1f)
+            ) {
+                Text(
+                    text = "Ulubione"
+                )
+            }
+
+            Button(
+                onClick = { },
+                modifier = modifier
+                    .weight(1f)
+            ) {
+                Text(
+                    text = "Moje"
+                )
+            }
+        }
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            items(mockupRecipes) { recipe ->
+                RecipeCard(
+                    id = recipe.id,
+                    title = recipe.title,
+                    preparation_time = recipe.preparation_time,
+                )
+            }
         }
     }
 }
