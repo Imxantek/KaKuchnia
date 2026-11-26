@@ -24,6 +24,6 @@ fun CalendarScreen(modifier: Modifier = Modifier) {
 @Composable
 fun CalendarScreenPreview() {
     KaKuchniaTheme {
-        HomeScreen()
+        CalendarScreen()
     }
 }

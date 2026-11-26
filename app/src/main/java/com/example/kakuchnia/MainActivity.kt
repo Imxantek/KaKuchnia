@@ -22,44 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kakuchnia.ui.theme.KaKuchniaTheme
 import com.example.kakuchnia.screens.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.example.kakuchnia.components.Screen
 import java.time.LocalDate
-
-
-sealed class Screen(val route: String, val title: String, val iconResId: Int) {
-    object Settings : Screen("settings", "Settings", R.drawable.ic_cogwheel)
-    object Calendar : Screen("calendar", "Calendar", R.drawable.ic_calendar)
-    object Add : Screen("add", "Add", R.drawable.ic_plus)
-    object Search : Screen("search", "Search", R.drawable.ic_search)
-    object Home : Screen("home", "Home", R.drawable.ic_home)
-
-}
-
-data class Recipe(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val preparation_time: Int,
-    val is_favourite: Boolean,
-    val user_added: Boolean,
-)
-data class Image(
-    val path: Int,
-    val recipe: Int
-)
-data class planned_recipe(
-    val date: LocalDate,
-    val recipe: Int
-)
-data class recipe_ingredient(
-    val recipe: Int,
-    val ingredient: String,
-    val amount: Double,
-    val unit: String
-)
-data class Ingedient(
-    val name: String,
-)
-
 
 
 class MainActivity : ComponentActivity() {
@@ -97,7 +61,7 @@ fun MainScreen() {
                     NavigationBarItem(
                         icon = {
                             Icon(
-                                painter = painterResource(id = screen.iconResId),
+                                painter = painterResource(id = screen.iconResId!!),
                                 contentDescription = "Home"
                             )
                         },
@@ -124,11 +88,18 @@ fun MainScreen() {
             startDestination = Screen.Home.route,
             modifier = Modifier.padding(innerPadding)
         ){
-            composable(Screen.Home.route) { HomeScreen() }
-            composable(Screen.Search.route) { SearchScreen() }
-            composable ( Screen.Add.route ) { AddScreen() }
+            composable(Screen.Home.route) { HomeScreen(
+                onRecipeClick = {
+                navController.navigate(Screen.IndividualRecipe.route)
+                }
+            ) }
+            composable(Screen.Search.route) { SearchScreen(onRecipeClick = {
+                navController.navigate(Screen.IndividualRecipe.route)
+            }) }
+            composable(Screen.Add.route) { AddScreen() }
             composable(Screen.Calendar.route) { CalendarScreen() }
             composable(Screen.Settings.route) { SettingsScreen() }
+            composable(Screen.IndividualRecipe.route){ RecipeScreen() }
         }
     }
 }
