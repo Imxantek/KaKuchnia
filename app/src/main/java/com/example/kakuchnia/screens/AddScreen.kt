@@ -24,6 +24,6 @@ fun AddScreen(modifier: Modifier = Modifier) {
 @Composable
 fun AddScreenPreview() {
     KaKuchniaTheme {
-        HomeScreen()
+        AddScreen()
     }
 }

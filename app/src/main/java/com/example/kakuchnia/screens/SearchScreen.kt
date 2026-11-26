@@ -20,9 +20,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
+import com.example.kakuchnia.components.RecipeCard
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
     var query by remember { mutableStateOf("") }
 
     Column(
@@ -97,11 +98,7 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(mockupRecipes) { recipe ->
-                RecipeCard(
-                    id = recipe.id,
-                    title = recipe.title,
-                    preparation_time = recipe.preparation_time,
-                )
+                RecipeCard(recipe, onRecipeClick)
             }
         }
     }
