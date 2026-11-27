@@ -37,116 +37,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kakuchnia.components.Image
 import com.example.kakuchnia.components.Recipe
 import com.example.kakuchnia.components.RecipeCard
+import com.example.kakuchnia.components.mockupRecipes
 
-val mockupRecipes: List<Recipe> = listOf(
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=2,
-        title="Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time=65,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=2,
-        title="Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time=65,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=2,
-        title="Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time=65,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=2,
-        title="Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time=65,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id = 2,
-        title = "Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time = 65,
-        is_favourite = true,
-        user_added = false,
-    ),
-    Recipe(
-        id=1,
-        title="Karp smażony",
-        description = "this is a mockup",
-        preparation_time=90,
-        is_favourite=true,
-        user_added=false,
-    ),
-    Recipe(
-        id=2,
-        title="Sernik z Air Fryera",
-        description = "this is a mockup",
-        preparation_time=65,
-        is_favourite=true,
-        user_added=false,
-    )
-)
-
-val mockupImages: List<Image> = listOf(
-    Image(
-        path=R.drawable.karp_smazony,
-        recipe=1
-    ),
-    Image(
-        path=R.drawable.sernik_z_airfryera,
-        recipe=2
-    )
-)
 
 @Composable
 fun Greeting(){
@@ -168,7 +60,7 @@ fun Greeting(){
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier, onRecipeClick: ()->Unit={}) {
+fun HomeScreen(modifier: Modifier = Modifier, onRecipeClick: (Int)->Unit={}) {
     Scaffold(
         modifier=modifier,
         topBar = {
@@ -181,7 +73,7 @@ fun HomeScreen(modifier: Modifier = Modifier, onRecipeClick: ()->Unit={}) {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ){
             items(mockupRecipes) { recipe ->
-                RecipeCard(recipe, onRecipeClick)
+                RecipeCard(recipe, {onRecipeClick(recipe.id)})
             }
         }
     }

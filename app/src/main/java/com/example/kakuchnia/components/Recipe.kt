@@ -1,10 +1,12 @@
 package com.example.kakuchnia.components
 
 data class Recipe(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val preparation_time: Int,
-    val is_favourite: Boolean,
+    var id: Int,
+    var title: String,
+    var description: String,
+    var preparation_time: Int,
+    var is_favourite: Boolean,
     val user_added: Boolean,
+    var ingredients: List<RecipeIngredient>,
+    var images: List<Image>,
 )

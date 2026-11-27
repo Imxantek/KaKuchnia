@@ -9,6 +9,8 @@ sealed class Screen(val route: String, val title: String, val iconResId: Int?=nu
     object Search : Screen("search", "Search", R.drawable.ic_search)
     object Home : Screen("home", "Home", R.drawable.ic_home)
 
-    object IndividualRecipe : Screen("individual_recipe", "Individual Recipe")
+    object IndividualRecipe : Screen("individual_recipe/{recipeId}", "Individual Recipe"){
+        fun createRoute(recipeId: Int)="individual_recipe/$recipeId"
+    }
 
 }
