@@ -21,23 +21,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.painterResource
 import com.example.kakuchnia.components.RecipeCard
+import com.example.kakuchnia.components.mockupRecipes
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
+fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: (Int)-> Unit={}) {
     var query by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
     ) {
         Text(
             text = "Szukaj...",
-            fontSize = 40.sp
+            fontSize = 40.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 16.dp)
         ) {
             TextField(
                 value = query,
@@ -62,10 +64,10 @@ fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
             }
         }
 
-        Row {
+        Row (modifier = Modifier.padding(horizontal = 16.dp)) {
             Button(
                 onClick = { },
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
             ) {
                 Text(
@@ -75,7 +77,7 @@ fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
 
             Button(
                 onClick = { },
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
             ) {
                 Text(
@@ -85,7 +87,7 @@ fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
 
             Button(
                 onClick = { },
-                modifier = modifier
+                modifier = Modifier
                     .weight(1f)
             ) {
                 Text(
@@ -98,7 +100,7 @@ fun SearchScreen(modifier: Modifier = Modifier, onRecipeClick: ()-> Unit={}) {
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
             items(mockupRecipes) { recipe ->
-                RecipeCard(recipe, onRecipeClick)
+                RecipeCard(recipe, {onRecipeClick(recipe.id)})
             }
         }
     }

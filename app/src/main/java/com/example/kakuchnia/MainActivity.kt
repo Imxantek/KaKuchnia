@@ -22,7 +22,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.kakuchnia.ui.theme.KaKuchniaTheme
 import com.example.kakuchnia.screens.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.kakuchnia.components.Screen
+import com.example.kakuchnia.components.mockupRecipes
 import java.time.LocalDate
 
 
@@ -71,10 +74,9 @@ fun MainScreen() {
                             if (currentRoute != screen.route) {
                                 navController.navigate(screen.route) {
                                     popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
+                                        inclusive = false
                                     }
                                     launchSingleTop = true
-                                    restoreState = true
                                 }
                             }
                         }
@@ -89,17 +91,27 @@ fun MainScreen() {
             modifier = Modifier.padding(innerPadding)
         ){
             composable(Screen.Home.route) { HomeScreen(
-                onRecipeClick = {
-                navController.navigate(Screen.IndividualRecipe.route)
+                onRecipeClick = { recipeId->
+                navController.navigate(Screen.IndividualRecipe.createRoute(recipeId))
                 }
             ) }
-            composable(Screen.Search.route) { SearchScreen(onRecipeClick = {
-                navController.navigate(Screen.IndividualRecipe.route)
+            composable(Screen.Search.route) { SearchScreen(
+                onRecipeClick = { recipeId->
+                navController.navigate(Screen.IndividualRecipe.createRoute(recipeId))
             }) }
             composable(Screen.Add.route) { AddScreen() }
             composable(Screen.Calendar.route) { CalendarScreen() }
             composable(Screen.Settings.route) { SettingsScreen() }
-            composable(Screen.IndividualRecipe.route){ RecipeScreen() }
+
+
+            composable(route=Screen.IndividualRecipe.route,
+                arguments = listOf(navArgument("recipeId"){type= NavType.IntType}))
+                { backStackEntry ->
+                    val recipeId = backStackEntry.arguments?.getInt("recipeId")
+                    val recipe = mockupRecipes.find { it.id == recipeId }
+
+                    RecipeScreen(recipe = recipe)
+                }
         }
     }
 }

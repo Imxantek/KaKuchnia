@@ -22,14 +22,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.kakuchnia.screens.mockupImages
 
 @Composable
-fun RecipeCard(recipe: Recipe, onRecipeClick: () -> Unit) {
+fun RecipeCard(recipe: Recipe, onRecipeClick: (Int) -> Unit) {
     val id = recipe.id
     val title = recipe.title
     val preparation_time = recipe.preparation_time
-    val img_path = mockupImages.find { it.recipe == id }
+    //leading image
+    val img_path = recipe.images.firstOrNull()?.path
     Card (
         modifier = Modifier
             .fillMaxWidth()
@@ -40,19 +40,21 @@ fun RecipeCard(recipe: Recipe, onRecipeClick: () -> Unit) {
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = img_path!!.path),
-                contentDescription = "Recipe image",
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(190.dp)
-                    .clip(RoundedCornerShape(19.dp))
-            )
+            if (img_path != null) {
+                Image(
+                    painter = painterResource(id = img_path),
+                    contentDescription = "Recipe image",
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(190.dp)
+                        .clip(RoundedCornerShape(19.dp))
+                )
+            }
             Column(modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
                 .padding(12.dp)
-                .clickable { onRecipeClick() }
+                .clickable { onRecipeClick(recipe.id) }
             ){
                 Text(
                     text = title,
